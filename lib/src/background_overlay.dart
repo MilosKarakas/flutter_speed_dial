@@ -1,6 +1,7 @@
 library flutter_speed_dial;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'global_key_extension.dart';
 
 class BackgroundOverlay extends AnimatedWidget {
@@ -35,12 +36,15 @@ class BackgroundOverlay extends AnimatedWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            GestureDetector(
-              onTap: closeManually ? null : onTap,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: color, backgroundBlendMode: BlendMode.dstOut),
-              ),
+            ExcludeSemantics(
+              excluding: true,
+              child: GestureDetector(
+                onTap: closeManually ? null : onTap,
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: color, backgroundBlendMode: BlendMode.dstOut),
+                ),
+              )
             ),
             Positioned(
               width: dialKey.globalPaintBounds?.size.width,
@@ -65,9 +69,9 @@ class BackgroundOverlay extends AnimatedWidget {
                     );
                     return tooltip != null && tooltip!.isNotEmpty
                         ? Tooltip(
-                            message: tooltip!,
-                            child: child,
-                          )
+                      message: tooltip!,
+                      child: child,
+                    )
                         : child;
                   }(),
                 ),
