@@ -75,10 +75,12 @@ class AnimatedChild extends AnimatedWidget {
       if (label == null && labelWidget == null) return Container();
 
       if (labelWidget != null) {
-        return GestureDetector(
-          onTap: performAction,
-          onLongPress: onLongPress == null ? null : () => performAction(true),
-          child: labelWidget,
+        return InkWell(
+          excludeFromSemantics: true,
+          onTap: () {
+            performAction();
+          },
+          child: labelWidget!,
         );
       }
 
