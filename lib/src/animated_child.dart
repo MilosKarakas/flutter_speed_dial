@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 
 class AnimatedChild extends AnimatedWidget {
   final int? index;
@@ -138,14 +139,19 @@ class AnimatedChild extends AnimatedWidget {
 
     List<Widget> children = [
       if (label != null || labelWidget != null)
-        ScaleTransition(
-          scale: animation,
-          child: Container(
-            padding: (child == null)
-                ? const EdgeInsets.symmetric(vertical: 8)
-                : null,
-            key: (child == null) ? btnKey : null,
-            child: buildLabel(),
+        Semantics(
+          container: true,
+          explicitChildNodes: true,
+          excludeSemantics: false,
+          child: ScaleTransition(
+            scale: animation,
+            child: Container(
+              padding: (child == null)
+                  ? const EdgeInsets.symmetric(vertical: 8)
+                  : null,
+              key: (child == null) ? btnKey : null,
+              child: buildLabel(),
+            ),
           ),
         ),
       if (child != null)
